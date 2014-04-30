@@ -15,15 +15,15 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rspec", "~>2.8.0"
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'ammeter', '~>0.2.2'
+  gem.add_development_dependency 'primedia'
+
   gem.add_dependency "riak-client", "~> 1.1.0"
   gem.add_dependency "activesupport", [">= 3.0.0", "< 3.3.0"]
   gem.add_dependency "activemodel", [">= 3.0.0", "< 3.3.0"]
   gem.add_dependency "tzinfo"
 
   # Files
-  ignores = File.read(".gitignore").split(/\r?\n/).reject{ |f| f =~ /^(#.+|\s*)$/ }.map {|f| Dir[f] }.flatten
-  gem.files         = (Dir['**/*','.gitignore'] - ignores).reject {|f| !File.file?(f) }
-  gem.test_files    = (Dir['spec/**/*','.gitignore'] - ignores).reject {|f| !File.file?(f) }
-  # gem.executables   = Dir['bin/*'].map { |f| File.basename(f) }
+  gem.files         = `git ls-files`.split($/)
   gem.require_paths = ['lib']
 end
+

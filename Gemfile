@@ -1,4 +1,5 @@
-source :rubygems
+source 'https://rubygems.org'
+source 'http://gems.idg.primedia.com'
 
 gemspec
 
@@ -15,3 +16,4 @@ end
 platforms :jruby do
   gem 'jruby-openssl'
 end
+

@@ -8,6 +8,7 @@
 .\#*
 .bundle
 .riaktest
+.ripplenode
 .rvmrc
 .yardoc
 Gemfile*.lock

@@ -1,0 +1,7 @@
+# This is the riak host where to run the tests
+host: localhost 
+# Location of riak code
+source: /usr/local/bin
+# http port
+http_port: 8098
+pb_port: 8087

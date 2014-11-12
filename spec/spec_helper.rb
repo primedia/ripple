@@ -14,8 +14,7 @@ Riak.disable_list_keys_warnings = true
 %w[
    integration_setup
    generator_setup
-   test_server
-   search
+   test_config
    models
    associations
   ].each do |file|
@@ -30,7 +29,7 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   # config.debug = true
   config.include Ripple::Conflict::TestHelper
-
+   
   if defined? Java
     config.seed = Time.now.to_i
   else

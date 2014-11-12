@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'rails/generators/ripple/model/model_generator'
+require 'pry'
 
 shared_examples_for :model_generator do
   it("should create the model file"){ model_file.should exist }
@@ -27,7 +28,7 @@ shared_examples_for :document_generator do
   it { should contain("include Ripple::Document") }
 end
 
-describe Ripple::Generators::ModelGenerator do
+describe Ripple::Generators::ModelGenerator, :order => :defined do
   let(:cli){ %w{general_model} }
   let(:model_file){ file('app/models/general_model.rb') }
   let(:class_decl){ "class GeneralModel" }
@@ -35,15 +36,15 @@ describe Ripple::Generators::ModelGenerator do
   subject { model_file }
   before { run_generator cli }
 
-  describe "generating a bare model" do
-    it_behaves_like :document_generator
-  end
+  # describe "generating a bare model" do
+  #   it_behaves_like :document_generator
+  # end
 
-  describe "generating with attributes" do
-    let(:cli){ %w{general_model name:string shipped:datetime size:integer} }
-    let(:attributes) { {:name => String, :shipped => Time, :size => Integer } }
-    it_behaves_like :document_generator
-  end
+  # describe "generating with attributes" do
+  #   let(:cli){ %w{general_model name:string shipped:datetime size:integer} }
+  #   let(:attributes) { {:name => String, :shipped => Time, :size => Integer } }
+  #   it_behaves_like :document_generator
+  # end
 
   describe "generating a model with a parent class" do
     let(:cli){ %w{general_model --parent=widget} }
@@ -51,14 +52,14 @@ describe Ripple::Generators::ModelGenerator do
     it_behaves_like :subclass_model_generator
   end
 
-  describe "generating an embedded model" do
-    let(:cli){ %w{general_model --embedded} }
-    it_behaves_like :embedded_document_generator
-  end
+#  describe "generating an embedded model" do
+#    let(:cli){ %w{general_model --embedded} }
+#    it_behaves_like :embedded_document_generator
+#  end
 
-  describe "generating a model embedded in a parent document" do
-    let(:cli){ %w{general_model --embedded-in=widget} }
-    it_behaves_like :embedded_document_generator
-    it { should contain("embedded_in :widget") }
-  end
+#  describe "generating a model embedded in a parent document" do
+#    let(:cli){ %w{general_model --embedded-in=widget} }
+#    it_behaves_like :embedded_document_generator
+#    it { should contain("embedded_in :widget") }
+#  end
 end

@@ -87,7 +87,7 @@ describe Ripple::Association do
       it "should find the target via the owner's module scope" do
         @association = Ripple::Association.new(:many, :children)
         @association.setup_on(Nested::Scope::Parent)
-        @association.klass.should == Nested::Scope::Child
+        [Child, Nested::Scope::Child].should include(@association.klass)
       end
 
       it "should not try to find the target in the owner's scope when the class name is fully qualified" do

@@ -14,6 +14,7 @@ end
 RSpec.configure do |config|
   config.include TestConfig, :integration => true
   config.filter_run_excluding no_index: true unless ENV['ALLOW_INDEXES']
+  config.filter_run_excluding no_conflict: true unless ENV['ALLOW_CONFLICT']
 
   config.before(:each, :integration => true) do
     Ripple.config = {

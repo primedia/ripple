@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 gemspec
 
@@ -11,6 +11,7 @@ end
 group :development, :test do
   gem 'ammeter', :path => '/Users/mmaiza/Dev/ammeter'
   gem 'pry'
+  gem 'pry-nav'
 end
 
 if File.directory?(File.expand_path("../../riak-client", __FILE__))

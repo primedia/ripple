@@ -1,6 +1,7 @@
 require 'spec_helper'
+require 'pry'
 
-describe "Ripple conflict resolution", :integration => true do
+describe "Ripple conflict resolution", :integration => true, :no_index => true do
   class ConflictedPerson
     include Ripple::Document
 
@@ -43,7 +44,6 @@ describe "Ripple conflict resolution", :integration => true do
   end
 
   after (:each) do
-    puts $bucket_names.inspect
     clear_riak Riak::Client.new(host: 'localhost', http_port: 8098)
   end
 

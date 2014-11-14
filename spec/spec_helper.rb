@@ -7,6 +7,7 @@ require 'ripple'
 require 'ripple/conflict/test_helper'
 require 'rspec'
 require 'ammeter'
+require 'pry'
 
 # Only the tests should really get away with this.
 Riak.disable_list_keys_warnings = true

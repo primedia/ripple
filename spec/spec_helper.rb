@@ -36,3 +36,24 @@ RSpec.configure do |config|
     config.order = :random
   end
 end
+
+$bucket_names = []
+module Ripple
+  module Document
+    module BucketAccess
+      alias_method :bucket_name_original, :bucket_name
+      
+      def bucket_name
+        name = bucket_name_original
+        !$bucket_names.include?(name) && $bucket_names.push(name) 
+        name
+      end
+
+    end
+  end
+end
+
+def clear_riak(client)
+  $bucket_names.each { |name| (bucket = client.bucket(name)).keys { |keys| keys.each { |key| bucket.delete(key) } } }
+end
+

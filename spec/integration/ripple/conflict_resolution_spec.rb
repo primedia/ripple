@@ -43,10 +43,6 @@ describe "Ripple conflict resolution", :integration => true, :no_index => true d
     ConflictedPerson.on_conflict { } # reset to no-op
   end
 
-  after (:each) do
-    clear_riak Riak::Client.new(host: 'localhost', http_port: 8098)
-  end
-
   context 'when there is no conflict' do
     it 'does not invoke the on_conflict hook' do
       ConflictedPerson.on_conflict { raise "This conflict hook should not be invoked" }

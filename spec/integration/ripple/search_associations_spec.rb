@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Ripple Search Associations", :integration => true, :search => true, :no_index => true do
+describe "Ripple Search Associations", :integration => true, :search => true, :no_search => true do
   class SearchTransaction
     include Ripple::Document
     property :search_account_key, String

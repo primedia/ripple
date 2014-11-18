@@ -9,12 +9,23 @@ module TestConfig
       pending("Can't run ripple integration specs without the test server. Specify the location of your Riak installation in spec/support/test_server.yml\n#{e.inspect}")
     end
   end
+
+  def random_bucket(name='test_client')
+    bucket_name = [name, Time.now.to_i, random_key].join('-')
+    test_client.bucket bucket_name
+  end
+
+  def random_key
+    rand(36**10).to_s(36)
+  end
+
 end
 
 RSpec.configure do |config|
   config.include TestConfig, :integration => true
   config.filter_run_excluding no_index: true unless ENV['ALLOW_INDEXES']
   config.filter_run_excluding no_conflict: true unless ENV['ALLOW_CONFLICT']
+  config.filter_run_excluding no_search: true unless ENV['ALLOW_CONFLICT']
 
   config.before(:each, :integration => true) do
     Ripple.config = {

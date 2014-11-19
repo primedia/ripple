@@ -64,21 +64,21 @@ describe Ripple::Associations::Proxy do
   end
 
   describe "#has_changed_documents?" do
-    before(:each) { @proxy.respond_to?(:loaded_documents).should be_true }
+    before(:each) { @proxy.respond_to?(:loaded_documents).should be_truthy }
 
     it "returns true if any of the loaded documents return true from #changed?" do
       @proxy.stub(:loaded_documents => [stub(:changed? => false), stub(:changed? => true)])
-      @proxy.has_changed_documents?.should be_true
+      @proxy.has_changed_documents?.should be_truthy
     end
 
     it "returns false if none of the loaded documents return true from #changed?" do
       @proxy.stub(:loaded_documents => [stub(:changed? => false), stub(:changed? => false)])
-      @proxy.has_changed_documents?.should be_false
+      @proxy.has_changed_documents?.should be_falsey
     end
 
     it "returns false if it has no loaded documents" do
       @proxy.stub(:loaded_documents => [])
-      @proxy.has_changed_documents?.should be_false
+      @proxy.has_changed_documents?.should be_falsey
     end
   end
 end

@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 
 describe "Ripple conflict resolution", :integration => true, :no_index => true do
   class ConflictedPerson

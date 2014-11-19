@@ -1,5 +1,4 @@
 require 'riak/test_server'
-require 'pry'
 
 module TestServerSupport
 

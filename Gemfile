@@ -9,7 +9,7 @@ group :guard do
 end
 
 group :development, :test do
-  gem 'ammeter', :path => '/Users/mmaiza/Dev/ammeter'
+  gem 'ammeter', :git=>'http://github.com/mmaiza/ammeter'
   gem 'pry'
   gem 'pry-nav'
 end

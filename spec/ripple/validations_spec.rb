@@ -34,12 +34,12 @@ describe Ripple::Validations do
 
   it "should override save to run validations" do
     subject.should_receive(:valid?).and_return(false)
-    subject.save.should be_false
+    subject.save.should be_falsey
   end
 
   it "should allow skipping validations by passing save :validate => false" do
     subject.should_not_receive(:valid?)
-    subject.save(:validate => false).should be_true
+    subject.save(:validate => false).should be_truthy
   end
 
   describe "when using save! on an invalid record" do
@@ -59,7 +59,7 @@ describe Ripple::Validations do
   it "should return true from save! when no exception is raised" do
     subject.stub!(:save).and_return(true)
     subject.stub!(:valid?).and_return(true)
-    subject.save!.should be_true
+    subject.save!.should be_truthy
   end
 
   it "should allow unexpected exceptions to be raised" do

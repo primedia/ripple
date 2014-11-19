@@ -143,7 +143,7 @@ describe Ripple::Document::Persistence do
     @widget.save
     @widget.should_not be_new
     @client.should_receive(:delete_object).and_return(true)
-    @widget.destroy.should be_true
+    @widget.destroy.should be_truthy
     @widget.should be_frozen
     @widget.should be_deleted
   end
@@ -151,7 +151,7 @@ describe Ripple::Document::Persistence do
   it "should destroy all saved objects" do
     @widget.should_receive(:destroy).and_return(true)
     Widget.should_receive(:list).and_yield(@widget)
-    Widget.destroy_all.should be_true
+    Widget.destroy_all.should be_truthy
   end
 
   context 'when a delete fails' do
@@ -162,7 +162,7 @@ describe Ripple::Document::Persistence do
     end
 
     it 'causes destroy to return false' do
-      @widget.destroy.should be_false
+      @widget.destroy.should be_falsey
     end
 
     it 'causes destroy! to raise an error' do
@@ -174,12 +174,12 @@ describe Ripple::Document::Persistence do
 
   it "should freeze an unsaved object when destroying" do
     @client.should_not_receive(:delete_object)
-    @widget.destroy.should be_true
+    @widget.destroy.should be_truthy
     @widget.should be_frozen
   end
 
   it "should be able to call #errors after destroying" do
-    @widget.destroy.should be_true
+    @widget.destroy.should be_truthy
     @widget.should be_frozen
     expect { @widget.errors }.to_not raise_error
   end

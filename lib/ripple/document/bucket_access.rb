@@ -1,5 +1,4 @@
 require 'ripple'
-require 'pry'
 
 module Ripple
   module Document

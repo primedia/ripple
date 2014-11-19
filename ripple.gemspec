@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.authors = ["Sean Cribbs"]
 
   # Deps
-  gem.add_development_dependency "rspec", "~>2.8.0"
+  gem.add_development_dependency "rspec", [">= 2.9.0", "< 3.0.0"]
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'ammeter', '~>0.2.9'
   gem.add_dependency "riak-client", "~> 1.1.0"

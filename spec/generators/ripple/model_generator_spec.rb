@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'rails/generators/ripple/model/model_generator'
-require 'pry'
 
 shared_examples_for :model_generator do
   it("should create the model file"){ model_file.should exist }

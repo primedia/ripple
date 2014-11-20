@@ -59,16 +59,16 @@ describe Ripple::Associations::OneEmbeddedProxy do
   end
 
   it "should validate the child when saving the parent" do
-    @parent.valid?.should be_true
+    @parent.valid?.should be_truthy
     @child.name = ''
     @parent.child = @child
-    @child.valid?.should be_false
-    @parent.valid?.should be_false
+    @child.valid?.should be_falsey
+    @parent.valid?.should be_falsey
   end
 
   it "should not save the root document when a child is invalid" do
     @parent.child = @child
-    @parent.save.should be_false
+    @parent.save.should be_falsey
   end
 
   it "should allow embedding documents in embedded documents" do

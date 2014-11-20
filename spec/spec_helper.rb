@@ -11,10 +11,30 @@ require 'ammeter'
 # Only the tests should really get away with this.
 Riak.disable_list_keys_warnings = true
 
+$bucket_names = []
+module Ripple
+  module Document
+    module BucketAccess
+      alias_method :bucket_name_original, :bucket_name
+      
+      def bucket_name
+        name = bucket_name_original
+        !$bucket_names.include?(name) && $bucket_names.push(name) 
+        name
+      end
+
+    end
+  end
+end
+
+def clear_riak(client)
+  $bucket_names.each { |name| (bucket = client.bucket(name)).keys { |keys| keys.each { |key| bucket.delete(key) } } }
+end
+
 %w[
    integration_setup
    generator_setup
-   test_server
+   test_config
    search
    models
    associations
@@ -30,10 +50,17 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   # config.debug = true
   config.include Ripple::Conflict::TestHelper
-
+   
   if defined? Java
     config.seed = Time.now.to_i
   else
     config.order = :random
   end
+
+  config.after (:each) do
+    clear_riak Riak::Client.new(host: 'localhost', http_port: 8098)
+  end
+  
 end
+
+

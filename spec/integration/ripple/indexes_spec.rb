@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Ripple::Indexes do
+describe Ripple::Indexes, :no_index => true do
   context "finding documents by an index" do
     before do
       @bob = Indexer.create(:name => "Bob", :age => 28)

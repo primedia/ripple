@@ -113,37 +113,37 @@ describe Ripple::AttributeMethods do
 
     it "should be false when the attribute is nil" do
       @widget.size.should be_nil
-      @widget.size?.should be_false
+      @widget.size?.should be_falsey
     end
 
     it "should be true when the attribute has a value present" do
       @widget.size = 10
-      @widget.size?.should be_true
+      @widget.size?.should be_truthy
     end
 
     it "should be false for 0 values" do
       @widget.size = 0
-      @widget.size?.should be_false
+      @widget.size?.should be_falsey
     end
 
     it "should be false for empty values" do
       @widget.name = ""
-      @widget.name?.should be_false
+      @widget.name?.should be_falsey
     end
   end
 
   it "should track changes to attributes" do
     @widget.name = "foobar"
-    @widget.changed?.should be_true
-    @widget.name_changed?.should be_true
+    @widget.changed?.should be_truthy
+    @widget.name_changed?.should be_truthy
     @widget.name_change.should == ["widget", "foobar"]
     @widget.changes.should == {"name" => ["widget", "foobar"]}
   end
 
   it "should report that an attribute is changed only if its value actually changes" do
     @widget.name = "widget"
-    @widget.changed?.should be_false
-    @widget.name_changed?.should be_false
+    @widget.changed?.should be_falsey
+    @widget.name_changed?.should be_falsey
     @widget.changes.should be_blank
   end
 
@@ -218,19 +218,19 @@ describe Ripple::AttributeMethods do
 
   it "should protect attributes from mass assignment when initialized" do
     @widget = Widget.new(:manufactured => true)
-    @widget.manufactured.should be_false
+    @widget.manufactured.should be_falsey
   end
 
   it "should protect attributes from mass assignment by default" do
     @widget = Widget.new
     @widget.attributes = { :manufactured => true }
-    @widget.manufactured.should be_false
+    @widget.manufactured.should be_falsey
   end
 
   it "should allow protected attributes to be mass assigned via raw_attributes=" do
     @widget = Widget.new
     @widget.send(:raw_attributes=, { :manufactured => true })
-    @widget.manufactured.should be_true
+    @widget.manufactured.should be_truthy
   end
 
   it "should allow mass assigning arbitrary attributes via raw_attributes" do
@@ -245,29 +245,29 @@ describe Ripple::AttributeMethods do
 
   it "should allow mass assigning arbitrary attributes when without_protection is specified" do
     @widget = Widget.new({:manufactured => true}, :without_protection => true)
-    @widget[:manufactured].should be_true
+    @widget[:manufactured].should be_truthy
 
     @client = Ripple.client
     @client.stub(:store_object => true)
 
     @widget = Widget.create({:manufactured => true}, :without_protection => true)
-    @widget[:manufactured].should be_true
+    @widget[:manufactured].should be_truthy
 
     @widget = Widget.create!({:manufactured => true}, :without_protection => true)
-    @widget[:manufactured].should be_true
+    @widget[:manufactured].should be_truthy
   end
 
   it "default assign_attributes should respect mass attribute assignment security" do
     @widget = Widget.new
     @widget.assign_attributes(:manufactured => true)
-    @widget.manufactured.should be_false
+    @widget.manufactured.should be_falsey
   end
 
   if(ActiveModel::VERSION::MAJOR == 3 && ActiveModel::VERSION::MINOR == 0)
     it "assigning attributes should respect roles" do
       @widget = Widget.new
       @widget.assign_attributes(:restricted => true)
-      @widget.restricted.should be_false
+      @widget.restricted.should be_falsey
 
       lambda do
         @widget.assign_attributes({:restricted => true}, :as => :admin)
@@ -277,10 +277,10 @@ describe Ripple::AttributeMethods do
     it "assigning attributes with a role should raise an error" do
       @widget = Widget.new
       @widget.assign_attributes(:restricted => true)
-      @widget.restricted.should be_false
+      @widget.restricted.should be_falsey
 
       @widget.assign_attributes({:restricted => true}, :as => :admin)
-      @widget.restricted.should be_true
+      @widget.restricted.should be_truthy
     end
   end
 end

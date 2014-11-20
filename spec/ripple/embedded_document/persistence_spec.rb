@@ -17,12 +17,12 @@ describe Ripple::EmbeddedDocument::Persistence do
 
   it "should delegate save to the root document" do
     @root.should_receive(:save).and_return(true)
-    @addr.save.should be_true
+    @addr.save.should be_truthy
   end
 
   it "should delegate save! to the root document" do
     @root.should_receive(:save).and_return(true)
-    @addr.save!.should be_true
+    @addr.save!.should be_truthy
   end
 
   it "should raise NoRootDocument when calling save without a root document" do

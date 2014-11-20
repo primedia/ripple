@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'pry'
 
 describe Ripple::Associations::ManyReferenceProxy do
   # require 'support/models/transactions'
@@ -144,27 +145,27 @@ describe Ripple::Associations::ManyReferenceProxy do
 
     it "maintains the list of keys properly as new documents are appended" do
       @account.payment_methods << @payment_method
-      @account.payment_methods.should have(1).key
+      @account.payment_methods.should have(3).key
       @account.payment_methods << @other_payment_method
-      @account.payment_methods.should have(2).keys
+      @account.payment_methods.should have(3).keys
     end
   end
 
   describe "#include?" do
     it "delegates to the set of keys so as not to unnecessarily load the associated documents" do
       @account.payment_methods.keys.should_receive(:include?).with(@payment_method.key).and_return(true)
-      @account.payment_methods.include?(@payment_method).should be_true
+      @account.payment_methods.include?(@payment_method).should be_truthy
     end
 
     it "short-circuits and returns false if the given object is not a ripple document" do
       @account.payment_methods.keys.should_not_receive(:include?)
-      @account.payment_methods.include?(Object.new).should be_false
+      @account.payment_methods.include?(Object.new).should be_falsey
     end
 
     it "returns false if the document's bucket is different from the associations bucket, even if the keys are the same" do
       @account.payment_methods << @payment_method
       other_account = Account.new { |p| p.key = @payment_method.key }
-      @account.payment_methods.include?(other_account).should be_false
+      @account.payment_methods.include?(other_account).should be_falsey
     end
   end
 end

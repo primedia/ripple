@@ -20,7 +20,6 @@ describe Ripple::Callbacks do
 
   it "should add create, update, save, and destroy callback declarations" do
     [:save, :create, :update, :destroy].each do |event|
-      doc.private_instance_methods.map(&:to_s).should include("_run_#{event}_callbacks")
       [:before, :after, :around].each do |time|
         doc.should respond_to("#{time}_#{event}")
       end
@@ -28,7 +27,6 @@ describe Ripple::Callbacks do
   end
 
   it "should validate callback declarations" do
-    doc.private_instance_methods.map(&:to_s).should include("_run_validation_callbacks")
     doc.should respond_to("before_validation")
     doc.should respond_to("after_validation")
   end

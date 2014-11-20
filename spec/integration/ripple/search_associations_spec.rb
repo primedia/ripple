@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Ripple Search Associations", :integration => true, :search => true do
+describe "Ripple Search Associations", :integration => true, :search => true, :no_search => true do
   class SearchTransaction
     include Ripple::Document
     property :search_account_key, String
@@ -21,9 +21,9 @@ describe "Ripple Search Associations", :integration => true, :search => true do
 
   it "should save a many referenced association" do
     @account.save!
-    @account.search_transactions << @transaction1 << @transaction2
     @transaction1.save!
     @transaction2.save!
+    @account.search_transactions << @transaction1 << @transaction2
     @found = SearchAccount.find(@account.key)
     @found.search_transactions.map(&:key).should include(@transaction1.key)
     @found.search_transactions.map(&:key).should include(@transaction2.key)

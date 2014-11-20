@@ -100,18 +100,18 @@ describe Ripple::Associations::ManyStoredKeyProxy do
   describe "#include?" do
     it "delegates to the set of keys so as not to unnecessarily load the associated documents" do
       @account.transactions.keys.should_receive(:include?).with(@transaction_two.key).and_return(true)
-      @account.transactions.include?(@transaction_two).should be_true
+      @account.transactions.include?(@transaction_two).should be_truthy
     end
 
     it "short-circuits and returns false if the given object is not a ripple document" do
       @account.transactions.keys.should_not_receive(:include?)
-      @account.transactions.include?(Object.new).should be_false
+      @account.transactions.include?(Object.new).should be_falsey
     end
 
     it "returns false if the document's bucket is different from the associations bucket, even if the keys are the same" do
       @account.transactions << @transaction_one
       other_account = Account.new { |p| p.key = @transaction_one.key }
-      @account.transactions.include?(other_account).should be_false
+      @account.transactions.include?(other_account).should be_falsey
     end
   end
 

@@ -69,15 +69,15 @@ describe Ripple::Associations::ManyEmbeddedProxy do
   end
 
   it "should validate the children when saving the parent" do
-    user.valid?.should be_true
+    user.valid?.should be_truthy
     user.addresses << address
-    address.valid?.should be_false
-    user.valid?.should be_false
+    address.valid?.should be_falsey
+    user.valid?.should be_falsey
   end
 
   it "should not save the root document when a child is invalid" do
     user.addresses << address
-    user.save.should be_false
+    user.save.should be_falsey
   end
 
   it "should allow embedding documents in embedded documents" do

@@ -27,21 +27,21 @@ describe Ripple::EmbeddedDocument do
     end
 
     def should_be_equal
-      (address_1 == address_2).should be_true
-      address_1.eql?(address_2).should be_true
+      (address_1 == address_2).should be_truthy
+      address_1.eql?(address_2).should be_truthy
 
-      (address_2 == address_1).should be_true
-      address_2.eql?(address_1).should be_true
+      (address_2 == address_1).should be_truthy
+      address_2.eql?(address_1).should be_truthy
 
       address_1.hash.should == address_2.hash
     end
 
     def should_not_be_equal(other_address = address_2)
-      (address_1 == other_address).should be_false
-      address_1.eql?(other_address).should be_false
+      (address_1 == other_address).should be_falsey
+      address_1.eql?(other_address).should be_falsey
 
-      (other_address == address_1).should be_false
-      address_1.eql?(other_address).should be_false
+      (other_address == address_1).should be_falsey
+      address_1.eql?(other_address).should be_falsey
 
       address_1.hash.should_not == other_address.hash
     end

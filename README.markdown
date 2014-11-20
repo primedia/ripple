@@ -22,6 +22,7 @@ $ bundle install
 Run the RSpec suite using `bundle exec`:
 
 ``` bash
+Uses riak on localhost. Make sure to start it first. 
 $ bundle exec rake spec
 ```
 

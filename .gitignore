@@ -1,36 +1,26 @@
-## MAC OS
-.DS_Store
-
-## TEXTMATE
-*.tmproj
-tmtags
-
-## EMACS
-*~
-\#*
-.\#*
-
-## VIM
-*.swp
-
-## PROJECT::GENERAL
-coverage
-rdoc
-pkg
-
-## PROJECT::SPECIFIC
-_notes
-doc
-.yardoc
-.bundle
-spec/support/test_server.yml
-Gemfile*.lock
+**/.riaktest
 **/bin
 *.rbc
-.rvmrc
-
+*.swp
+*.tmproj
+*~
+.DS_Store
+.\#*
+.bundle
 .riaktest
-**/.riaktest
+.ripplenode
+.rvmrc
+.yardoc
+Gemfile*.lock
+\#*
+_notes
+coverage
+doc
+pkg
+rdoc
+spec/support/test_server.yml
+tmp/*
+tmtags
 vendor/erlang
 vendor/riak
-tmp/*
+

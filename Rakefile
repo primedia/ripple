@@ -2,6 +2,7 @@ require 'rubygems'
 require 'rubygems/package_task'
 require 'rspec/core'
 require 'rspec/core/rake_task'
+require 'primedia/gem_tasks'
 
 def gemspec
   $ripple_gemspec ||= Gem::Specification.load("ripple.gemspec")
@@ -20,7 +21,7 @@ task :gemspec do
 end
 
 desc %{Release the gem to RubyGems.org}
-task :release => :gem do
+task :rubygems_release => :gem do
   system "gem push pkg/#{gemspec.name}-#{gemspec.version}.gem"
 end
 
@@ -61,3 +62,4 @@ namespace :spec do
 end
 
 task :default => "spec:all"
+

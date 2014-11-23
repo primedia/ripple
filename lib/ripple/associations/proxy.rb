@@ -1,4 +1,5 @@
 require 'ripple/associations'
+require 'active_support/core_ext/array/wrap'
 
 module Ripple
   module Associations

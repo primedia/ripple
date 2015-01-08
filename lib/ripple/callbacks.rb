@@ -12,7 +12,7 @@ module Ripple
     included do
       extend ActiveModel::Callbacks
       define_model_callbacks *(CALLBACK_TYPES - [:validation])
-      define_callbacks :validation, :terminator => "result == false", :scope => [:kind, :name]
+      define_callbacks :validation, :terminator => callback_terminator, :scope => [:kind, :name]
     end
 
     module ClassMethods
@@ -35,6 +35,15 @@ module Ripple
         options[:if] << "@_on_validate == :#{options[:on]}" if options[:on]
         set_callback(:validation, :after, *(args << options), &block)
       end
+
+      def callback_terminator
+        if ::ActiveSupport::VERSION::STRING >= '4.1'
+          lambda { |target, result| result == false }
+        else
+          'result == false'
+        end
+      end
+
     end
 
     # @private
@@ -67,5 +76,6 @@ module Ripple
         super
       end
     end
+
   end
 end

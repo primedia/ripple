@@ -28,10 +28,13 @@ module Ripple
 
       # Defines a callback to be run after validations.
       def after_validation(*args, &block)
+        conditional = ActiveSupport::Callbacks::Conditionals::Value.new { |v|
+          v != false
+        }
         options = args.extract_options!
         options[:prepend] = true
         options[:if] = Array(options[:if])
-        options[:if] << "!halted && value != false"
+        options[:if] << conditional
         options[:if] << "@_on_validate == :#{options[:on]}" if options[:on]
         set_callback(:validation, :after, *(args << options), &block)
       end

@@ -47,13 +47,13 @@ describe Ripple::Callbacks do
     end
 
     it "propagates callbacks to embedded associated documents" do
-      $callbacks = []
-      doc.before_save { $callbacks << :box }
-      embedded.before_save { $callbacks << :side }
-      embedded.after_save { $callbacks << :area }
+      callbacks = []
+      doc.before_save { callbacks << :box }
+      embedded.before_save { callbacks << :side }
+      embedded.after_save { callbacks << :area }
       subject.embeddeds << embedded.new
       subject.save
-      $callbacks.should == [:side, :box, :area]
+      callbacks.should == [:side, :box, :area]
     end
 
     it 'does not persist the object to riak multiple times when propagating callbacks' do

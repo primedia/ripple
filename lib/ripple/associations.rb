@@ -167,15 +167,13 @@ module Ripple
         next if documents.nil?
 
         Array(documents).each do |doc|
-          # Imitates run_callbacks in activesupport. Refactor
-          # https://github.com/rails/rails/blob/4-2-stable/activesupport/lib/active_support/callbacks.rb
           callback_chain = doc.send "_#{name}_callbacks"
           if ::ActiveSupport::VERSION::STRING >= '4.1'
             unless callback_chain.blank?
               o = callback_chain.clone
               cbs = o.tap { |ch| ch.each { |c| o.delete(c) if c.kind != kind } }
               runner = cbs.compile
-              e = ActiveSupport::Callbacks::Filters::Environment.new self, false, nil, nil
+              e = ActiveSupport::Callbacks::Filters::Environment.new doc, false, nil, nil
               runner.call(e).value
             end
           else
@@ -196,7 +194,6 @@ module Ripple
       # validation is already propagated to embedded documents via the
       # AssociatedValidator.  We don't need to duplicate the propagation here.
       return super if name == :validation
-
       propagate_callbacks_to_embedded_associations(name, :before)
       return_value = super
       propagate_callbacks_to_embedded_associations(name, :after)

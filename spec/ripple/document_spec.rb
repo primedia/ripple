@@ -87,6 +87,10 @@ describe Ripple::Document do
       value.should be_kind_of(klass)
     end
 
+    def assert_equal(first_value, second_value)
+      expect(first_value).to eq(second_value)
+    end
+
     ActiveModel::Lint::Tests.instance_methods.grep(/^test/).each do |m|
       it "#{m}" do
         send(m)

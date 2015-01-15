@@ -18,6 +18,8 @@ require 'ripple/associations/one_key_proxy'
 require 'ripple/associations/one_stored_key_proxy'
 require 'ripple/associations/many_reference_proxy'
 
+require 'pry'
+
 module Ripple
   # Adds associations via links and embedding to {Ripple::Document}
   # models. Examples:
@@ -165,9 +167,22 @@ module Ripple
         next if documents.nil?
 
         Array(documents).each do |doc|
-          doc.send("_#{name}_callbacks").each do |callback|
-            next unless callback.kind == kind
-            doc.send(callback.filter)
+          # Imitates run_callbacks in activesupport. Refactor
+          # https://github.com/rails/rails/blob/4-2-stable/activesupport/lib/active_support/callbacks.rb
+          callback_chain = doc.send "_#{name}_callbacks"
+          if ::ActiveSupport::VERSION::STRING >= '4.1'
+            unless callback_chain.blank?
+              o = callback_chain.clone
+              cbs = o.tap { |ch| ch.each { |c| o.delete(c) if c.kind != kind } }
+              runner = cbs.compile
+              e = ActiveSupport::Callbacks::Filters::Environment.new self, false, nil, nil
+              runner.call(e).value
+            end
+          else
+            callback_chain.each do |callback|
+              next unless callback.kind == kind
+              doc.send(callback.filter)
+            end
           end
         end
       end

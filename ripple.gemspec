@@ -16,8 +16,8 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rake', '~> 0'
   gem.add_development_dependency 'ammeter', '~>0.2.9'
   gem.add_dependency "riak-client", "~> 1.4", ">= 1.4.6"
-  gem.add_dependency "activesupport", [">= 4.2.0", "< 5.0.0"]
-  gem.add_dependency "activemodel", [">= 4.2.0", "< 5.0.0"]
+  gem.add_dependency "activesupport", [">= 4.0.0", "< 5.0.0"]
+  gem.add_dependency "activemodel", [">= 4.0.0", "< 5.0.0"]
   gem.add_dependency "protected_attributes", '~>1.0'
   gem.add_dependency "rails-observers", '~>0.1'
   gem.add_dependency "tzinfo", '~>1.1'

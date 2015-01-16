@@ -2,7 +2,6 @@ require 'rubygems'
 require 'rubygems/package_task'
 require 'rspec/core'
 require 'rspec/core/rake_task'
-require 'primedia/gem_tasks'
 
 def gemspec
   $ripple_gemspec ||= Gem::Specification.load("ripple.gemspec")

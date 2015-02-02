@@ -18,8 +18,6 @@ require 'ripple/associations/one_key_proxy'
 require 'ripple/associations/one_stored_key_proxy'
 require 'ripple/associations/many_reference_proxy'
 
-require 'pry'
-
 module Ripple
   # Adds associations via links and embedding to {Ripple::Document}
   # models. Examples:
